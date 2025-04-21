@@ -119,103 +119,187 @@ EOF
 cat > "$PROJECT_DIR/MemoryBank/00_master/00_file_registry.md" << EOF
 # Registro de Archivos - $PROJECT_NAME
 
-Este documento mantiene un registro actualizado de todos los archivos en el Memory Bank.
+Este documento mantiene un registro de todos los archivos en el proyecto.
+Se actualiza automáticamente cuando se ejecuta el script \`00_update_registry.sh\`.
 
-## Archivos Maestros
-- [00_master_index.md](00_master_index.md) - Índice maestro del proyecto
-- [00_file_registry.md](00_file_registry.md) - Este archivo de registro
+## Última actualización: $(date +"%Y-%m-%d %H:%M:%S")
+
+## Estructura de directorios
+
+\`\`\`
+MemoryBank/
+├── 00_master/
+│   ├── 00_master_index.md
+│   ├── 00_file_registry.md
+│   └── 00_update_registry.sh
+├── 01_basic_info/
+├── 02_app_flow/
+└── 06_class_relationships/
+\`\`\`
+
+## Archivos por sección
+
+### 00_master
+- [00_master_index.md](00_master_index.md) - Índice maestro que organiza toda la documentación
+- [00_file_registry.md](00_file_registry.md) - Este archivo, registro completo de archivos
 - [00_update_registry.sh](00_update_registry.sh) - Script para actualizar automáticamente este registro
 
-## Secciones
 ### 01_basic_info
-*Archivos pendientes de crear*
+*Pendiente de creación*
 
 ### 02_app_flow
-*Archivos pendientes de crear*
+*Pendiente de creación*
 
-## Última actualización
-$(date)
+### 06_class_relationships
+*Pendiente de creación*
 
+## Estadísticas
+- Total de archivos: 3
+- Total de directorios: 4
+- Última actualización: $(date +"%Y-%m-%d %H:%M:%S")
 EOF
 
-# Crear script de actualización de registro
-cat > "$PROJECT_DIR/MemoryBank/00_master/00_update_registry.sh" << EOF
+# Crear script de actualización
+cat > "$PROJECT_DIR/MemoryBank/00_master/00_update_registry.sh" << 'EOF'
 #!/bin/bash
 
 # Script para actualizar automáticamente el registro de archivos
-# Versión 1.0.0
+# Ubicación: MemoryBank/00_master/00_update_registry.sh
 
-# Colores para mensajes
+# Directorio base de MemoryBank
+base_dir=$(dirname "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)")
+registry_file="$base_dir/00_master/00_file_registry.md"
+project_name=$(grep "^# Índice Maestro -" "$base_dir/00_master/00_master_index.md" | sed 's/# Índice Maestro - //')
+
+# Colores para salida
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "\${BLUE}Actualizando registro de archivos...${NC}"
-
-# Directorio base
-BASE_DIR=".."
-REGISTRY_FILE="00_file_registry.md"
-PROJECT_NAME="$PROJECT_NAME"
+echo -e "${BLUE}Actualizando registro de archivos...${NC}"
 
 # Crear encabezado del archivo
-cat > "\${REGISTRY_FILE}" << HEADER
-# Registro de Archivos - \${PROJECT_NAME}
+cat > "$registry_file" << EOL
+# Registro de Archivos - $project_name
 
-Este documento mantiene un registro actualizado de todos los archivos en el Memory Bank.
+Este documento mantiene un registro de todos los archivos en el proyecto.
+Se actualiza automáticamente cuando se ejecuta el script \`00_update_registry.sh\`.
 
-## Archivos Maestros
-- [00_master_index.md](00_master_index.md) - Índice maestro del proyecto
-- [00_file_registry.md](00_file_registry.md) - Este archivo de registro
-- [00_update_registry.sh](00_update_registry.sh) - Script para actualizar automáticamente este registro
+## Última actualización: $(date +"%Y-%m-%d %H:%M:%S")
 
-## Secciones
-HEADER
+## Estructura de directorios
 
-# Obtener todas las carpetas (excluyendo la actual y ocultas)
-for dir in \$(find \${BASE_DIR} -type d | sort | grep -v "^\${BASE_DIR}/\." | grep -v "^\."); do
-  # Obtener nombre de directorio relativo
-  rel_dir=\$(echo \${dir} | sed "s|\${BASE_DIR}/||")
-  
-  # Saltar el directorio actual
-  if [ "\${rel_dir}" = "00_master" ]; then
-    continue
-  fi
-  
-  # Añadir encabezado de sección
-  echo "### \${rel_dir}" >> "\${REGISTRY_FILE}"
-  
-  # Contar archivos en la carpeta
-  file_count=\$(find "\${dir}" -type f | wc -l)
-  
-  if [ \${file_count} -eq 0 ]; then
-    echo "*Archivos pendientes de crear*" >> "\${REGISTRY_FILE}"
-  else
-    # Listar archivos en la carpeta
-    for file in \$(find "\${dir}" -type f -name "*.md" | sort); do
-      filename=\$(basename "\${file}")
-      # Obtener el título del archivo (primera línea que empieza con #)
-      title=\$(grep -m 1 "^# " "\${file}" | sed 's/^# //')
-      if [ -z "\${title}" ]; then
-        title="\${filename}"
-      fi
-      echo "- [\${filename}](\${dir}/\${filename}) - \${title}" >> "\${REGISTRY_FILE}"
+\`\`\`
+EOL
+
+# Generar estructura de directorios
+find "$base_dir" -type d | sort | awk -v base="$base_dir" '{gsub(base, "MemoryBank"); print $0}' | sed 's/^//' >> "$registry_file"
+
+# Cerrar bloque de código
+echo -e "\`\`\`\n" >> "$registry_file"
+
+# Añadir secciones por directorio
+echo "## Archivos por sección" >> "$registry_file"
+
+# Obtener todos los directorios
+dirs=$(find "$base_dir" -type d | sort)
+
+# Para cada directorio, listar los archivos
+for dir in $dirs; do
+    # Nombre relativo del directorio
+    rel_dir=$(echo "$dir" | sed "s|$base_dir|MemoryBank|")
+    section_name=$(basename "$dir")
+    
+    echo -e "\n### $section_name" >> "$registry_file"
+    
+    # Verificar si hay archivos en el directorio
+    if [ -z "$(ls -A "$dir" | grep -v '^\.')" ]; then
+        echo "*Pendiente de creación*" >> "$registry_file"
+        continue
+    fi
+    
+    # Listar archivos
+    for file in $(find "$dir" -maxdepth 1 -type f | sort); do
+        filename=$(basename "$file")
+        if [[ "$filename" == .* ]]; then
+            continue  # Saltar archivos ocultos
+        fi
+        
+        # Extraer título del archivo markdown si existe
+        if [[ "$file" == *.md ]]; then
+            title=$(head -n 1 "$file" | sed 's/^# //')
+            echo "- [$filename](${file#$base_dir/00_master/}) - $title" >> "$registry_file"
+        else
+            echo "- [$filename](${file#$base_dir/00_master/})" >> "$registry_file"
+        fi
     done
-  fi
-  
-  echo "" >> "\${REGISTRY_FILE}"
 done
 
-# Añadir fecha de última actualización
-echo "## Última actualización" >> "\${REGISTRY_FILE}"
-echo "\$(date)" >> "\${REGISTRY_FILE}"
+# Añadir estadísticas
+total_files=$(find "$base_dir" -type f | grep -v '^\.' | wc -l)
+total_dirs=$(find "$base_dir" -type d | grep -v '^\.' | wc -l)
 
-echo -e "\${GREEN}Registro de archivos actualizado correctamente.${NC}"
+echo -e "\n## Estadísticas" >> "$registry_file"
+echo "- Total de archivos: $total_files" >> "$registry_file"
+echo "- Total de directorios: $total_dirs" >> "$registry_file"
+echo "- Última actualización: $(date +"%Y-%m-%d %H:%M:%S")" >> "$registry_file"
+
+# Hacer ejecutable el script
+chmod +x "$base_dir/00_master/00_update_registry.sh"
+
+echo -e "${GREEN}Registro de archivos actualizado correctamente.${NC}"
 EOF
 
-# Hacer ejecutable el script de actualización
+# Hacer ejecutable el script
 chmod +x "$PROJECT_DIR/MemoryBank/00_master/00_update_registry.sh"
 
-# Crear README en la raíz del MemoryBank
+# Crear archivos básicos de información del proyecto
+cat > "$PROJECT_DIR/MemoryBank/01_basic_info/project_overview.md" << EOF
+# Descripción General - $PROJECT_NAME
+
+## Resumen
+
+$PROJECT_DESCRIPTION
+
+## Información Básica
+
+- **Nombre del Proyecto**: $PROJECT_NAME
+- **Tipo**: $PROJECT_TYPE
+- **Plataforma**: $PLATFORM
+- **Lenguaje Principal**: $MAIN_LANGUAGE
+- **Arquitectura**: $ARCHITECTURE
+- **Organización**: $COMPANY_NAME
+- **Año**: $PROJECT_YEAR
+
+## Propósito
+
+[Describir aquí el propósito principal del proyecto]
+
+## Objetivos
+
+- [Objetivo 1]
+- [Objetivo 2]
+- [Objetivo 3]
+
+## Usuarios Objetivo
+
+- [Perfil de usuario 1]
+- [Perfil de usuario 2]
+
+## Características Principales
+
+- [Característica 1]
+- [Característica 2]
+- [Característica 3]
+
+## Enlaces Importantes
+
+- [Repositorio del Proyecto](#)
+- [Sistema de Gestión de Proyectos](#)
+- [Documentación Adicional](#)
+EOF
+
+# Crear archivo README en la raíz del MemoryBank
 cat > "$PROJECT_DIR/MemoryBank/README.md" << EOF
 # Memory Bank para $PROJECT_NAME
 
@@ -226,8 +310,7 @@ Este directorio contiene la documentación estructurada completa del proyecto, s
 - **00_master**: Archivos maestros e índices
 - **01_basic_info**: Información básica del proyecto
 - **02_app_flow**: Flujo de la aplicación
-- **06_class_relationships**: Relaciones y dependencias entre clases
-- ...
+- **06_class_relationships**: Relaciones entre clases y componentes
 
 ## Cómo usar este banco de memoria
 
@@ -241,96 +324,9 @@ Este banco de memoria tiene como objetivo proporcionar contexto completo del pro
 - La incorporación de nuevos desarrolladores
 - La comprensión de la arquitectura y patrones
 - La documentación del código y decisiones de diseño
-
-## Proyecto
-
-- **Nombre**: $PROJECT_NAME
-- **Tipo**: $PROJECT_TYPE
-- **Plataforma**: $PLATFORM
-- **Lenguaje**: $MAIN_LANGUAGE
-- **Descripción**: $PROJECT_DESCRIPTION
-EOF
-
-# Crear archivos básicos de información
-mkdir -p "$PROJECT_DIR/MemoryBank/01_basic_info"
-cat > "$PROJECT_DIR/MemoryBank/01_basic_info/project_overview.md" << EOF
-# Descripción General del Proyecto
-
-## $PROJECT_NAME
-
-**Descripción**: $PROJECT_DESCRIPTION
-
-*Este documento proporciona una visión general del proyecto, sus objetivos y alcance.*
-
-## Objetivos
-
-*[Añadir objetivos principales del proyecto]*
-
-## Alcance
-
-*[Definir el alcance del proyecto]*
-
-## Características Principales
-
-*[Listar las características principales]*
-
-## Usuarios Objetivo
-
-*[Describir los usuarios objetivo]*
-
-## Estado Actual
-
-*[Indicar el estado actual del proyecto]*
-EOF
-
-cat > "$PROJECT_DIR/MemoryBank/01_basic_info/technologies.md" << EOF
-# Tecnologías Utilizadas
-
-## Lenguajes
-- $MAIN_LANGUAGE
-- *[Añadir otros lenguajes si aplica]*
-
-## Frameworks y Bibliotecas
-- *[Listar frameworks utilizados]*
-
-## Herramientas de Desarrollo
-- *[Enumerar herramientas de desarrollo]*
-
-## Entornos
-- *[Detallar entornos: Desarrollo, Pruebas, Producción, etc.]*
-
-## Servicios Externos
-- *[Describir servicios externos integrados]*
-EOF
-
-cat > "$PROJECT_DIR/MemoryBank/01_basic_info/architecture.md" << EOF
-# Arquitectura del Proyecto
-
-## Patrón Arquitectónico: $ARCHITECTURE
-
-*Este documento describe la arquitectura general del proyecto y sus componentes principales.*
-
-## Diagrama de Arquitectura
-
-*[Insertar diagrama de arquitectura aquí]*
-
-## Capas de la Aplicación
-
-*[Describir las diferentes capas de la aplicación]*
-
-## Componentes Principales
-
-*[Enumerar y describir los componentes principales]*
-
-## Flujo de Datos
-
-*[Explicar cómo fluyen los datos a través del sistema]*
-
-## Patrones de Diseño Utilizados
-
-*[Listar patrones de diseño implementados]*
 EOF
 
 echo -e "${GREEN}¡Instalación completada correctamente!${NC}"
 echo -e "Archivo init.json personalizado y estructura básica creada en: ${BLUE}$PROJECT_DIR/MemoryBank${NC}"
 echo -e "Puedes comenzar revisando: ${BLUE}$PROJECT_DIR/MemoryBank/README.md${NC}"
+echo -e "Y el índice maestro: ${BLUE}$PROJECT_DIR/MemoryBank/00_master/00_master_index.md${NC}"
