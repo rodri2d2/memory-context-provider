@@ -1,0 +1,274 @@
+{
+  "version": "1.0.0",
+  "meta": {
+    "name": "Memory Context Provider - iOS App Example",
+    "description": "Ejemplo de configuración para aplicaciones iOS",
+    "creator": "MCP Tool",
+    "createdAt": "2025-04-21T12:00:00Z"
+  },
+  "projectInfo": {
+    "name": "MyAwesomeApp",
+    "type": "iOS",
+    "platform": "iOS",
+    "mainLanguage": "Swift",
+    "frameworks": ["SwiftUI", "Combine", "SwiftData"],
+    "architecture": "MVVM",
+    "designPatterns": ["Observer", "Dependency Injection", "Factory", "Repository"]
+  },
+  "coreIndexFiles": {
+    "masterIndex": {
+      "filename": "00_master_index.md",
+      "description": "Índice maestro que organiza toda la documentación del proyecto",
+      "required": true,
+      "updateFrequency": "on-change"
+    },
+    "fileRegistry": {
+      "filename": "00_file_registry.md",
+      "description": "Registro completo de todos los archivos del proyecto",
+      "required": true,
+      "updateFrequency": "on-change"
+    },
+    "updateScript": {
+      "filename": "00_update_registry.sh",
+      "description": "Script para actualizar automáticamente el registro de archivos",
+      "required": true,
+      "updateFrequency": "never"
+    }
+  },
+  "memoryBankStructure": {
+    "sections": [
+      {
+        "id": "basic-info",
+        "title": "Información Básica del Proyecto",
+        "priority": 1,
+        "requiredFiles": ["project_overview.md", "technologies.md", "architecture.md"],
+        "requiredFields": ["name", "platform", "description", "frameworks", "architecture"],
+        "optionalFields": ["version", "team", "repositories"],
+        "purpose": "Proporcionar una visión general del proyecto en un vistazo"
+      },
+      {
+        "id": "app-flow",
+        "title": "Flujo de la Aplicación",
+        "priority": 2,
+        "requiredFiles": ["main_flow.md", "entry_points.md", "user_journeys.md"],
+        "subsections": [
+          {
+            "id": "main-flow",
+            "title": "Flujo Principal",
+            "description": "Secuencia de pantallas y acciones principales"
+          },
+          {
+            "id": "entry-points",
+            "title": "Puntos de Entrada",
+            "description": "Cómo se inicializa la aplicación y sus puntos de entrada principales"
+          },
+          {
+            "id": "user-journeys",
+            "title": "Jornadas de Usuario",
+            "description": "Flujos completos para casos de uso principales"
+          }
+        ],
+        "purpose": "Entender cómo fluye la información y las interacciones a través de la aplicación"
+      },
+      {
+        "id": "domain-architecture",
+        "title": "Arquitectura por Dominios",
+        "priority": 3,
+        "requiredFiles": ["auth_domain.md", "user_domain.md", "home_domain.md", "settings_domain.md"],
+        "dynamicSubsections": "true",
+        "subsectionType": "domains",
+        "subsectionTemplate": {
+          "title": "Dominio de {domainName}",
+          "content": [
+            "Modelos",
+            "ViewModels",
+            "Servicios",
+            "Operaciones principales"
+          ]
+        },
+        "purpose": "Comprender la separación de responsabilidades y cómo están organizados los diferentes dominios funcionales"
+      },
+      {
+        "id": "ui-components",
+        "title": "Componentes de UI",
+        "priority": 4,
+        "requiredFiles": ["main_views.md", "reusable_components.md", "navigation.md"],
+        "subsections": [
+          {
+            "id": "main-views",
+            "title": "Vistas Principales",
+            "description": "Pantallas principales de la aplicación"
+          },
+          {
+            "id": "reusable-components",
+            "title": "Componentes Reutilizables",
+            "description": "Componentes de UI compartidos en toda la aplicación"
+          },
+          {
+            "id": "navigation",
+            "title": "Navegación",
+            "description": "Cómo se gestiona la navegación entre pantallas"
+          }
+        ],
+        "purpose": "Identificar los componentes visuales y cómo interactúan entre sí"
+      },
+      {
+        "id": "ios-specific",
+        "title": "Características Específicas de iOS",
+        "priority": 5,
+        "requiredFiles": ["app_lifecycle.md", "notifications.md", "permissions.md", "background_tasks.md"],
+        "subsections": [
+          {
+            "id": "app-lifecycle",
+            "title": "Ciclo de Vida de la App",
+            "description": "Gestión del ciclo de vida de la aplicación en iOS"
+          },
+          {
+            "id": "notifications",
+            "title": "Notificaciones",
+            "description": "Implementación de notificaciones locales y remotas"
+          },
+          {
+            "id": "permissions",
+            "title": "Permisos",
+            "description": "Gestión de permisos requeridos por la aplicación"
+          },
+          {
+            "id": "background-tasks",
+            "title": "Tareas en Segundo Plano",
+            "description": "Implementación de tareas en segundo plano"
+          }
+        ],
+        "purpose": "Documentar la implementación de características específicas de la plataforma iOS"
+      },
+      {
+        "id": "swiftui-patterns",
+        "title": "Patrones SwiftUI",
+        "priority": 6,
+        "requiredFiles": ["view_modifiers.md", "custom_controls.md", "animation_patterns.md", "layout_techniques.md"],
+        "subsections": [
+          {
+            "id": "view-modifiers",
+            "title": "Modificadores de Vista",
+            "description": "Modificadores de vista personalizados"
+          },
+          {
+            "id": "custom-controls",
+            "title": "Controles Personalizados",
+            "description": "Implementación de controles SwiftUI personalizados"
+          },
+          {
+            "id": "animation-patterns",
+            "title": "Patrones de Animación",
+            "description": "Técnicas de animación utilizadas en la aplicación"
+          },
+          {
+            "id": "layout-techniques",
+            "title": "Técnicas de Layout",
+            "description": "Enfoques para layouts complejos en SwiftUI"
+          }
+        ],
+        "purpose": "Documentar patrones y técnicas específicas de SwiftUI utilizadas en el proyecto"
+      },
+      {
+        "id": "state-management",
+        "title": "Gestión de Estado",
+        "priority": 7,
+        "requiredFiles": ["global_state.md", "local_state.md", "persistence.md"],
+        "subsections": [
+          {
+            "id": "global-state",
+            "title": "Estado Global",
+            "description": "Gestión de estado a nivel de aplicación"
+          },
+          {
+            "id": "local-state",
+            "title": "Estado Local",
+            "description": "Gestión de estado a nivel de componente"
+          },
+          {
+            "id": "persistence",
+            "title": "Persistencia",
+            "description": "Estrategias de persistencia con SwiftData"
+          }
+        ],
+        "purpose": "Comprender cómo se maneja el estado en diferentes niveles de la aplicación"
+      },
+      {
+        "id": "networking",
+        "title": "Networking",
+        "priority": 8,
+        "requiredFiles": ["api_clients.md", "request_response.md", "error_handling.md", "caching.md"],
+        "subsections": [
+          {
+            "id": "api-clients",
+            "title": "Clientes API",
+            "description": "Implementación de clientes para APIs"
+          },
+          {
+            "id": "request-response",
+            "title": "Petición-Respuesta",
+            "description": "Modelos de petición y respuesta"
+          },
+          {
+            "id": "error-handling",
+            "title": "Manejo de Errores",
+            "description": "Estrategias para manejar errores de red"
+          },
+          {
+            "id": "caching",
+            "title": "Caché",
+            "description": "Estrategias de caché para datos de red"
+          }
+        ],
+        "purpose": "Documentar la arquitectura de red de la aplicación"
+      }
+    ],
+    "analysis": {
+      "analyzeProjectStructure": true,
+      "analyzeDesignPatterns": true,
+      "analyzeClassRelationships": true,
+      "analyzeDataFlow": true,
+      "generateDependencyGraph": true,
+      "identifyDomains": true
+    },
+    "output": {
+      "format": "markdown",
+      "includeTableOfContents": true,
+      "generateDiagrams": true,
+      "diagramTypes": ["class", "component", "sequence", "state"],
+      "singleFile": true,
+      "separateDiagrams": false
+    }
+  },
+  "scanDirectories": {
+    "include": [
+      "MyAwesomeApp",
+      "Models",
+      "ViewModels",
+      "Views",
+      "Services",
+      "Utilities",
+      "Extensions",
+      "Resources"
+    ],
+    "exclude": [
+      ".git",
+      ".build",
+      "DerivedData",
+      "Pods",
+      "Carthage"
+    ]
+  },
+  "templateVariables": {
+    "companyName": "Mi Empresa",
+    "projectYear": "2025",
+    "teamMembers": ["Developer 1", "Developer 2"],
+    "projectDescription": "Una increíble aplicación iOS usando SwiftUI y SwiftData",
+    "deploymentPlatforms": ["iOS 18.0+", "iPadOS 18.0+"],
+    "minimumVersions": {
+      "iOS": "18.0",
+      "Xcode": "16.0"
+    }
+  }
+}
