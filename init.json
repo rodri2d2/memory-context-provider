@@ -1,0 +1,492 @@
+{
+  "version": "1.0.0",
+  "meta": {
+    "name": "Memory Context Provider Initializer",
+    "description": "Archivo de configuración inicial para generar un Memory Bank de contexto completo para proyectos de software",
+    "creator": "MCP Tool",
+    "createdAt": "2025-04-06T12:00:00Z"
+  },
+  "projectInfo": {
+    "name": "{PROJECT_NAME}",
+    "type": "{PROJECT_TYPE}",
+    "platform": "{PLATFORM}",
+    "mainLanguage": "{MAIN_LANGUAGE}",
+    "frameworks": [],
+    "architecture": "{ARCHITECTURE}",
+    "designPatterns": []
+  },
+  "coreIndexFiles": {
+    "masterIndex": {
+      "filename": "00_master_index.md",
+      "description": "Índice maestro que organiza toda la documentación del proyecto",
+      "required": true,
+      "updateFrequency": "on-change"
+    },
+    "fileRegistry": {
+      "filename": "00_file_registry.md",
+      "description": "Registro completo de todos los archivos del proyecto",
+      "required": true,
+      "updateFrequency": "on-change"
+    },
+    "updateScript": {
+      "filename": "00_update_registry.sh",
+      "description": "Script para actualizar automáticamente el registro de archivos",
+      "required": true,
+      "updateFrequency": "never"
+    },
+    "relationshipMaps": {
+      "callMap": {
+        "filename": "06_class_relationships/call_map.md",
+        "description": "Mapa detallado de llamadas entre componentes",
+        "required": true,
+        "updateFrequency": "manual"
+      },
+      "dependenciesGraph": {
+        "filename": "06_class_relationships/dependencies_graph.md",
+        "description": "Gráfico de dependencias principales",
+        "required": true,
+        "updateFrequency": "manual"
+      },
+      "injectionDiagram": {
+        "filename": "06_class_relationships/injection_diagram.md",
+        "description": "Diagrama detallado de inyección de dependencias",
+        "required": true,
+        "updateFrequency": "manual"
+      }
+    }
+  },
+  "memoryBankStructure": {
+    "sections": [
+      {
+        "id": "basic-info",
+        "title": "Información Básica del Proyecto",
+        "priority": 1,
+        "requiredFiles": ["project_overview.md", "technologies.md", "architecture.md"],
+        "requiredFields": ["name", "platform", "description", "frameworks", "architecture"],
+        "optionalFields": ["version", "team", "repositories"],
+        "purpose": "Proporcionar una visión general del proyecto en un vistazo"
+      },
+      {
+        "id": "app-flow",
+        "title": "Flujo de la Aplicación",
+        "priority": 2,
+        "requiredFiles": ["main_flow.md", "entry_points.md", "user_journeys.md"],
+        "subsections": [
+          {
+            "id": "main-flow",
+            "title": "Flujo Principal",
+            "description": "Secuencia de pantallas y acciones principales"
+          },
+          {
+            "id": "entry-points",
+            "title": "Puntos de Entrada",
+            "description": "Cómo se inicializa la aplicación y sus puntos de entrada principales"
+          },
+          {
+            "id": "user-journeys",
+            "title": "Jornadas de Usuario",
+            "description": "Flujos completos para casos de uso principales"
+          }
+        ],
+        "purpose": "Entender cómo fluye la información y las interacciones a través de la aplicación"
+      },
+      {
+        "id": "domain-architecture",
+        "title": "Arquitectura por Dominios",
+        "priority": 3,
+        "requiredFiles": ["auth_domain.md", "user_domain.md", "avatar_domain.md", "chat_ai_domain.md"],
+        "dynamicSubsections": "true",
+        "subsectionType": "domains",
+        "subsectionTemplate": {
+          "title": "Dominio de {domainName}",
+          "content": [
+            "Modelos",
+            "Managers/Controllers",
+            "Servicios",
+            "Operaciones principales"
+          ]
+        },
+        "purpose": "Comprender la separación de responsabilidades y cómo están organizados los diferentes dominios funcionales"
+      },
+      {
+        "id": "ui-components",
+        "title": "Componentes de UI",
+        "priority": 4,
+        "requiredFiles": ["main_views.md", "reusable_components.md", "navigation.md"],
+        "subsections": [
+          {
+            "id": "main-views",
+            "title": "Vistas Principales",
+            "description": "Pantallas principales de la aplicación"
+          },
+          {
+            "id": "reusable-components",
+            "title": "Componentes Reutilizables",
+            "description": "Componentes de UI compartidos en toda la aplicación"
+          },
+          {
+            "id": "navigation",
+            "title": "Navegación",
+            "description": "Cómo se gestiona la navegación entre pantallas"
+          }
+        ],
+        "purpose": "Identificar los componentes visuales y cómo interactúan entre sí"
+      },
+      {
+        "id": "communication-patterns",
+        "title": "Patrones de Comunicación",
+        "priority": 5,
+        "requiredFiles": ["data_flow.md", "dependency_injection.md", "event_handling.md"],
+        "subsections": [
+          {
+            "id": "data-flow",
+            "title": "Flujo de Datos",
+            "description": "Cómo fluyen los datos entre las diferentes capas"
+          },
+          {
+            "id": "dependency-injection",
+            "title": "Inyección de Dependencias",
+            "description": "Cómo se administran y proporcionan las dependencias"
+          },
+          {
+            "id": "event-handling",
+            "title": "Manejo de Eventos",
+            "description": "Cómo se comunican los componentes a través de eventos"
+          }
+        ],
+        "purpose": "Entender los mecanismos de comunicación entre los diferentes componentes del sistema"
+      },
+      {
+        "id": "state-management",
+        "title": "Gestión de Estado",
+        "priority": 6,
+        "requiredFiles": ["global_state.md", "local_state.md", "persistence.md"],
+        "subsections": [
+          {
+            "id": "global-state",
+            "title": "Estado Global",
+            "description": "Cómo se gestiona el estado a nivel de aplicación"
+          },
+          {
+            "id": "local-state",
+            "title": "Estado Local",
+            "description": "Gestión de estado a nivel de componente"
+          },
+          {
+            "id": "persistence",
+            "title": "Persistencia",
+            "description": "Cómo se persisten los datos entre sesiones"
+          }
+        ],
+        "purpose": "Comprender cómo se maneja el estado en diferentes niveles de la aplicación"
+      },
+      {
+        "id": "external-services",
+        "title": "Servicios y APIs Externos",
+        "priority": 7,
+        "requiredFiles": ["firebase.md", "openai.md", "swiftdata.md"],
+        "dynamicSubsections": "true",
+        "subsectionType": "services",
+        "purpose": "Documentar las integraciones con servicios externos y cómo se utilizan"
+      },
+      {
+        "id": "implementation-guide",
+        "title": "Guía de Implementación",
+        "priority": 8,
+        "requiredFiles": ["new_manager.md", "new_view.md", "extend_model.md", "adding_service.md"],
+        "subsections": [
+          {
+            "id": "new-feature",
+            "title": "Crear una Nueva Funcionalidad",
+            "description": "Pasos para implementar nuevas funcionalidades"
+          },
+          {
+            "id": "new-component",
+            "title": "Añadir un Nuevo Componente",
+            "description": "Cómo implementar y conectar un nuevo componente"
+          },
+          {
+            "id": "extend-model",
+            "title": "Extender un Modelo Existente",
+            "description": "Proceso para añadir o modificar modelos de datos"
+          },
+          {
+            "id": "adding-service",
+            "title": "Integrar un Nuevo Servicio",
+            "description": "Cómo añadir un nuevo servicio al proyecto"
+          }
+        ],
+        "purpose": "Proporcionar guías paso a paso para tareas comunes de desarrollo"
+      },
+      {
+        "id": "testing-pattern",
+        "title": "Patrón de Pruebas",
+        "priority": 9,
+        "requiredFiles": ["unit_tests.md", "ui_tests.md", "integration_tests.md"],
+        "subsections": [
+          {
+            "id": "unit-tests",
+            "title": "Pruebas Unitarias",
+            "description": "Enfoques para probar componentes individuales"
+          },
+          {
+            "id": "ui-tests",
+            "title": "Pruebas de UI",
+            "description": "Estrategias para probar la interfaz de usuario"
+          },
+          {
+            "id": "integration-tests",
+            "title": "Pruebas de Integración",
+            "description": "Cómo probar la interacción entre componentes"
+          }
+        ],
+        "purpose": "Establecer patrones claros para probar diferentes aspectos de la aplicación"
+      },
+      {
+        "id": "conventions",
+        "title": "Convenciones y Estándares",
+        "priority": 10,
+        "requiredFiles": ["naming.md", "file_organization.md", "code_conventions.md"],
+        "subsections": [
+          {
+            "id": "naming",
+            "title": "Nomenclatura",
+            "description": "Convenciones de nomenclatura para diferentes tipos de elementos"
+          },
+          {
+            "id": "file-organization",
+            "title": "Organización de Archivos",
+            "description": "Cómo se estructuran los archivos y carpetas"
+          },
+          {
+            "id": "code-conventions",
+            "title": "Convenciones de Código",
+            "description": "Prácticas y estándares de codificación"
+          }
+        ],
+        "purpose": "Mantener consistencia en todo el código base"
+      },
+      {
+        "id": "troubleshooting",
+        "title": "Guía para Resolver Problemas Comunes",
+        "priority": 11,
+        "requiredFiles": ["lifecycle_issues.md", "error_handling.md", "debugging.md"],
+        "subsections": [
+          {
+            "id": "lifecycle-issues",
+            "title": "Ciclo de Vida de la Aplicación",
+            "description": "Problemas comunes relacionados con el ciclo de vida"
+          },
+          {
+            "id": "error-handling",
+            "title": "Manejo de Errores",
+            "description": "Estrategias para manejar errores comunes"
+          },
+          {
+            "id": "debugging",
+            "title": "Depuración",
+            "description": "Técnicas para identificar y resolver problemas"
+          }
+        ],
+        "purpose": "Proporcionar soluciones para problemas frecuentes"
+      },
+      {
+        "id": "new-project-template",
+        "title": "Estructura para Nuevos Proyectos",
+        "priority": 12,
+        "requiredFiles": ["template.md", "initialization_checklist.md"],
+        "description": "Patrón a seguir al crear un nuevo proyecto utilizando esta arquitectura",
+        "purpose": "Facilitar la creación de nuevos proyectos siguiendo la misma arquitectura"
+      },
+      {
+        "id": "project-evolution",
+        "title": "Evolución del Proyecto",
+        "priority": 13,
+        "requiredFiles": ["next_steps.md", "improvement_areas.md", "extension_points.md"],
+        "subsections": [
+          {
+            "id": "next-steps",
+            "title": "Próximos Pasos",
+            "description": "Características y mejoras planificadas"
+          },
+          {
+            "id": "improvement-areas",
+            "title": "Áreas de Mejora",
+            "description": "Aspectos que pueden optimizarse"
+          },
+          {
+            "id": "extension-points",
+            "title": "Puntos de Extensión",
+            "description": "Áreas diseñadas para futuras extensiones"
+          }
+        ],
+        "purpose": "Planificar y documentar la evolución futura del proyecto"
+      },
+      {
+        "id": "domain-dictionary",
+        "title": "Diccionario del Dominio",
+        "priority": 14,
+        "requiredFiles": ["glossary.md", "key_concepts.md"],
+        "description": "Glosario de términos específicos del dominio y conceptos clave",
+        "purpose": "Establecer un lenguaje común para hablar sobre el proyecto"
+      },
+      {
+        "id": "decision-log",
+        "title": "Registro de Decisiones",
+        "priority": 15,
+        "requiredFiles": ["architecture_decisions.md", "technology_choices.md"],
+        "description": "Registro de decisiones arquitectónicas importantes con su razonamiento",
+        "purpose": "Mantener un registro de por qué se tomaron ciertas decisiones de diseño"
+      },
+      {
+        "id": "class-relationships",
+        "title": "Relaciones entre Clases",
+        "priority": 16,
+        "requiredFiles": ["dependencies_graph.md", "call_map.md", "injection_diagram.md"],
+        "description": "Documentación detallada de las relaciones, inyecciones y llamadas entre clases",
+        "purpose": "Proporcionar una visión clara de cómo los componentes interactúan entre sí"
+      }
+    ],
+    "analysis": {
+      "analyzeProjectStructure": true,
+      "analyzeDesignPatterns": true,
+      "analyzeClassRelationships": true,
+      "analyzeDataFlow": true,
+      "generateDependencyGraph": true,
+      "identifyDomains": true
+    },
+    "output": {
+      "format": "markdown",
+      "includeTableOfContents": true,
+      "generateDiagrams": true,
+      "diagramTypes": ["class", "component", "sequence", "state"],
+      "singleFile": true,
+      "separateDiagrams": false
+    }
+  },
+  "memoryBankEnhancementRules": [
+    {
+      "rule": "ContextExpansion",
+      "description": "Expandir el contexto de clases y funciones con información sobre su propósito en el sistema más amplio",
+      "shouldApply": true
+    },
+    {
+      "rule": "HistoricalContext",
+      "description": "Incluir información sobre por qué se diseñaron componentes de cierta manera cuando sea relevante",
+      "shouldApply": true
+    },
+    {
+      "rule": "ExampleUsage",
+      "description": "Proporcionar ejemplos de uso para componentes complejos o patrones",
+      "shouldApply": true
+    },
+    {
+      "rule": "BestPractices",
+      "description": "Documentar las mejores prácticas específicas del proyecto",
+      "shouldApply": true
+    },
+    {
+      "rule": "AlternativeApproaches",
+      "description": "Mencionar enfoques alternativos que fueron considerados",
+      "shouldApply": true
+    },
+    {
+      "rule": "PotentialPitfalls",
+      "description": "Resaltar posibles problemas o errores comunes",
+      "shouldApply": true
+    },
+    {
+      "rule": "PerformanceConsiderations",
+      "description": "Documentar implicaciones de rendimiento cuando sean relevantes",
+      "shouldApply": true
+    },
+    {
+      "rule": "SecurityConsiderations",
+      "description": "Resaltar consideraciones de seguridad importantes",
+      "shouldApply": true
+    }
+  ],
+  "analysisPriorities": {
+    "architecturalPatterns": 10,
+    "dataFlow": 9,
+    "businessLogic": 8,
+    "domainConcepts": 10,
+    "uiComponents": 7,
+    "stateManagement": 8,
+    "externalServices": 6,
+    "errorHandling": 7,
+    "testingApproach": 5
+  },
+  "additionalFeatures": {
+    "generateQuickstartGuide": true,
+    "includeCodeExamples": true,
+    "generateFAQ": true,
+    "suggestImprovements": true,
+    "linkToRelevantDocumentation": true,
+    "highlightKeyComponents": true,
+    "includeMaintenanceGuidelines": true
+  },
+  "scanDirectories": {
+    "include": [
+      "src",
+      "app",
+      "lib",
+      "components",
+      "services",
+      "utils",
+      "models",
+      "controllers",
+      "views"
+    ],
+    "exclude": [
+      "node_modules",
+      "tests",
+      ".git",
+      "build",
+      "dist",
+      "target",
+      "bin",
+      "obj",
+      "out",
+      "coverage"
+    ]
+  },
+  "customSections": [
+    {
+      "id": "accessibility",
+      "title": "Guía de Accesibilidad",
+      "description": "Pautas y prácticas para garantizar que la aplicación sea accesible",
+      "priority": 17,
+      "requiredFiles": ["guidelines.md", "voiceover.md"]
+    },
+    {
+      "id": "localization",
+      "title": "Estrategia de Localización",
+      "description": "Enfoque para gestionar la internacionalización y localización",
+      "priority": 18,
+      "requiredFiles": ["multilanguage.md", "internationalization.md"]
+    },
+    {
+      "id": "performance-optimization",
+      "title": "Optimización de Rendimiento",
+      "description": "Estrategias para mantener un rendimiento óptimo",
+      "priority": 19,
+      "requiredFiles": ["strategies.md", "performance_profiles.md"]
+    }
+  ],
+  "templateVariables": {
+    "companyName": "{COMPANY_NAME}",
+    "projectYear": "{PROJECT_YEAR}",
+    "teamMembers": [],
+    "projectDescription": "{PROJECT_DESCRIPTION}",
+    "deploymentPlatforms": [],
+    "minimumVersions": {}
+  },
+  "instructions": {
+    "generation": "Utiliza este archivo como base para generar un Memory Bank completo del proyecto. Analiza la estructura del proyecto, identifica sus componentes principales y dominios, y crea una documentación estructurada siguiendo las secciones definidas aquí. Personaliza las secciones según sea necesario para el tipo específico de proyecto.",
+    "adaptation": "Reemplaza todos los marcadores de posición entre llaves {PLACEHOLDER} con información real del proyecto. Añade o elimina secciones según corresponda al tipo y complejidad del proyecto.",
+    "extension": "Este esquema es una guía inicial. Siéntete libre de modificar o extender las secciones para mejor adaptarse a las necesidades específicas del proyecto que estás documentando.",
+    "customization": "Para proyectos con necesidades específicas, añade secciones personalizadas usando la estructura proporcionada en 'customSections'.",
+    "updateProcess": "Para mantener actualizado el registro de archivos, ejecuta el script 00_update_registry.sh regularmente o cuando se añadan nuevos archivos al proyecto. El índice maestro (00_master_index.md) debe actualizarse manualmente cuando se añadan nuevas secciones o documentos."
+  }
+}
