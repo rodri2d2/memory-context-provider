@@ -326,6 +326,44 @@ Este banco de memoria tiene como objetivo proporcionar contexto completo del pro
 - La documentación del código y decisiones de diseño
 EOF
 
+# Crear archivo de estado MCP
+CURRENT_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+cat > "$PROJECT_DIR/MemoryBank/.mcp-status.json" << EOF
+{
+  "version": "1.0.0",
+  "initialized": true,
+  "lastUpdated": "$CURRENT_DATE",
+  "project": {
+    "name": "$PROJECT_NAME",
+    "type": "$PROJECT_TYPE",
+    "platform": "$PLATFORM",
+    "language": "$MAIN_LANGUAGE",
+    "architecture": "$ARCHITECTURE"
+  },
+  "sections": {
+    "basic-info": true,
+    "app-flow": false,
+    "domain-architecture": false,
+    "ui-components": false,
+    "communication-patterns": false,
+    "state-management": false,
+    "external-services": false,
+    "implementation-guide": false,
+    "testing-pattern": false,
+    "conventions": false,
+    "troubleshooting": false,
+    "new-project-template": false,
+    "project-evolution": false,
+    "domain-dictionary": false,
+    "decision-log": false,
+    "class-relationships": false
+  },
+  "customSections": {},
+  "fileCount": 4,
+  "lastAnalysis": "$CURRENT_DATE"
+}
+EOF
+
 echo -e "${GREEN}¡Instalación completada correctamente!${NC}"
 echo -e "Archivo init.json personalizado y estructura básica creada en: ${BLUE}$PROJECT_DIR/MemoryBank${NC}"
 echo -e "Puedes comenzar revisando: ${BLUE}$PROJECT_DIR/MemoryBank/README.md${NC}"
