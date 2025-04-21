@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "initialized": true,
+  "lastUpdated": "{CURRENT_DATE}",
+  "project": {
+    "name": "{PROJECT_NAME}",
+    "type": "{PROJECT_TYPE}",
+    "platform": "{PLATFORM}",
+    "language": "{MAIN_LANGUAGE}",
+    "architecture": "{ARCHITECTURE}"
+  },
+  "sections": {
+    "basic-info": true,
+    "app-flow": false,
+    "domain-architecture": false,
+    "ui-components": false,
+    "communication-patterns": false,
+    "state-management": false,
+    "external-services": false,
+    "implementation-guide": false,
+    "testing-pattern": false,
+    "conventions": false,
+    "troubleshooting": false,
+    "new-project-template": false,
+    "project-evolution": false,
+    "domain-dictionary": false,
+    "decision-log": false,
+    "class-relationships": false
+  },
+  "customSections": {},
+  "fileCount": 3,
+  "lastAnalysis": "{CURRENT_DATE}"
+}
