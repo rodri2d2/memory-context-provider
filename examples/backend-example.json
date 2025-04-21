@@ -1,0 +1,67 @@
+{
+  "projectInfo": {
+    "name": "API-Service",
+    "type": "Backend",
+    "platform": "Server",
+    "mainLanguage": "Python",
+    "frameworks": ["FastAPI", "SQLAlchemy", "Pydantic"],
+    "architecture": "Hexagonal",
+    "designPatterns": ["Repository", "Factory", "Adapter"]
+  },
+  "customSections": [
+    {
+      "id": "database",
+      "title": "Arquitectura de Base de Datos",
+      "description": "Esquemas, migraciones y acceso a datos",
+      "priority": 20,
+      "requiredFiles": ["schema.md", "migrations.md", "queries.md"]
+    },
+    {
+      "id": "api-endpoints",
+      "title": "Endpoints de API",
+      "description": "Documentación detallada de todos los endpoints",
+      "priority": 21,
+      "requiredFiles": ["auth_endpoints.md", "user_endpoints.md", "resource_endpoints.md"]
+    },
+    {
+      "id": "async-tasks",
+      "title": "Tareas Asíncronas",
+      "description": "Procesamiento en segundo plano y colas",
+      "priority": 22,
+      "requiredFiles": ["celery_tasks.md", "task_scheduling.md"]
+    },
+    {
+      "id": "deployments",
+      "title": "Despliegue",
+      "description": "Configuración de despliegue en diferentes entornos",
+      "priority": 23,
+      "requiredFiles": ["docker_configuration.md", "kubernetes_setup.md", "ci_cd_pipeline.md"]
+    }
+  ],
+  "templateVariables": {
+    "companyName": "TechSolutions",
+    "projectYear": "2025",
+    "teamMembers": ["Backend Dev 1", "Backend Dev 2", "DevOps"],
+    "projectDescription": "API RESTful para servir datos a aplicaciones frontend con autenticación y autorización",
+    "deploymentPlatforms": ["Docker", "Kubernetes", "AWS"],
+    "minimumVersions": {
+      "python": "3.11",
+      "fastapi": "0.100.0",
+      "sqlalchemy": "2.0.0"
+    }
+  },
+  "scanDirectories": {
+    "include": [
+      "app",
+      "migrations",
+      "tests",
+      "scripts"
+    ],
+    "exclude": [
+      "venv",
+      "__pycache__",
+      "*.egg-info",
+      ".pytest_cache"
+    ]
+  }
+}
