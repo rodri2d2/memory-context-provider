@@ -1,0 +1,45 @@
+{
+  "projectInfo": {
+    "name": "DashboardX",
+    "type": "Web App",
+    "platform": "Web",
+    "mainLanguage": "JavaScript",
+    "frameworks": ["React", "Next.js", "Tailwind CSS"],
+    "architecture": "Component-based",
+    "designPatterns": ["Container/Presenter", "Redux", "Custom Hooks"]
+  },
+  "customSections": [
+    {
+      "id": "frontend-components",
+      "title": "Componentes Frontend",
+      "description": "Catálogo de componentes reutilizables de UI",
+      "priority": 20,
+      "requiredFiles": ["component_library.md", "theming.md"]
+    },
+    {
+      "id": "api-integration",
+      "title": "Integración con API",
+      "description": "Cómo se integra la aplicación con servicios backend",
+      "priority": 21,
+      "requiredFiles": ["api_clients.md", "data_fetching.md"]
+    },
+    {
+      "id": "deployment",
+      "title": "Despliegue",
+      "description": "Configuración y proceso de despliegue",
+      "priority": 22,
+      "requiredFiles": ["vercel_setup.md", "ci_cd.md"]
+    }
+  ],
+  "templateVariables": {
+    "companyName": "WebTech Solutions",
+    "projectYear": "2025",
+    "teamMembers": ["Frontend Dev", "UI/UX Designer", "Backend Dev"],
+    "projectDescription": "Dashboard de análisis de datos con visualizaciones interactivas",
+    "deploymentPlatforms": ["Vercel", "Netlify"],
+    "minimumVersions": {
+      "node": "18.0.0",
+      "npm": "9.0.0"
+    }
+  }
+}
