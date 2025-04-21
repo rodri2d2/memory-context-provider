@@ -12,6 +12,46 @@ curl -s https://raw.githubusercontent.com/rodri2d2/memory-context-provider/main/
 curl -s https://raw.githubusercontent.com/rodri2d2/memory-context-provider/main/install.sh | bash -s mi-proyecto
 ```
 
+## 🤖 Prompt para agentes IA (Claude, ChatGPT, etc.)
+
+Para inicializar o actualizar tu Memory Bank con un agente IA, copia y pega el siguiente prompt:
+
+```
+Quiero que inicialices o actualices el Memory Bank para mi proyecto utilizando el patrón Memory Context Provider. Sigue estos pasos:
+
+1. Verifica si ya existe una carpeta MemoryBank en mi proyecto:
+   - Si existe, analiza su contenido para entender la estructura actual
+   - Si no existe, prepárate para crear una nueva estructura
+
+2. Descarga el archivo init.json del repositorio:
+   - URL: https://raw.githubusercontent.com/rodri2d2/memory-context-provider/main/init.json
+
+3. Personaliza el init.json para este proyecto con los siguientes datos:
+   - Nombre del proyecto: [NOMBRE DEL PROYECTO]
+   - Tipo: [TIPO DE PROYECTO: iOS, Web, Backend, etc.]
+   - Plataforma: [PLATAFORMA: iOS, Web, Android, etc.]
+   - Lenguaje principal: [LENGUAJE: Swift, TypeScript, Python, etc.]
+   - Arquitectura: [ARQUITECTURA: MVVM, Clean, MVC, etc.]
+   - Descripción: [BREVE DESCRIPCIÓN DEL PROYECTO]
+
+4. Genera o actualiza la estructura del Memory Bank:
+   - Crea la carpeta "MemoryBank" si no existe
+   - Crea o actualiza los archivos maestros en 00_master/
+   - Asegúrate de incluir un archivo .mcp-status.json que indique la versión y última actualización
+
+5. Si es posible, analiza mi código fuente para:
+   - Identificar componentes principales
+   - Detectar patrones de diseño
+   - Documentar la estructura de archivos
+
+6. Al finalizar, indícame:
+   - Qué archivos has creado o actualizado
+   - Cómo puedo utilizar el Memory Bank
+   - Qué secciones debo completar manualmente
+```
+
+Modifica el prompt según las necesidades específicas de tu proyecto.
+
 ## 📋 ¿Qué es un Memory Bank?
 
 Un Memory Bank es una estructura de documentación organizada que proporciona un contexto completo del proyecto, incluyendo:
@@ -25,6 +65,29 @@ Un Memory Bank es una estructura de documentación organizada que proporciona un
 - Guías de implementación
 - Convenciones y estándares
 - Y mucho más...
+
+## 🔍 Identificación del estado del Memory Bank
+
+Cada Memory Bank incluye un archivo `.mcp-status.json` en su directorio raíz que contiene:
+
+```json
+{
+  "version": "1.0.0",
+  "initialized": true,
+  "lastUpdated": "2025-04-21T12:00:00Z",
+  "sections": {
+    "basic-info": true,
+    "app-flow": true,
+    "domain-architecture": false,
+    ...
+  }
+}
+```
+
+Los agentes pueden usar este archivo para:
+- Verificar si el Memory Bank ya ha sido inicializado
+- Comprobar qué secciones están completas y cuáles faltan
+- Conocer la fecha de la última actualización
 
 ## 🛠️ Estructura del repositorio
 
